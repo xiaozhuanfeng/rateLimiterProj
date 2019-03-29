@@ -1,6 +1,7 @@
 package com.example.demo.configuration;
 
 import com.example.demo.interceptor.CalculateReqInterceptor;
+import com.example.demo.interceptor.LimitReqNumInterceptor;
 import com.example.demo.interceptor.RateLimitInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +22,21 @@ public class WebInterceptorConfig extends WebMvcConfigurationSupport {
         return new CalculateReqInterceptor();
     }
 
+    @Bean
+    public LimitReqNumInterceptor getLimitReqNumInterceptor() {
+        return new LimitReqNumInterceptor();
+    }
+
+
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration rateLimitIcpt = registry.addInterceptor(getRateLimitInterceptor());
         // 拦截配置
         rateLimitIcpt.addPathPatterns("/rateLimit/**");
+
+        //请求数量拦截
+        InterceptorRegistration limitReqNumIcpt = registry.addInterceptor(getLimitReqNumInterceptor());
+        limitReqNumIcpt.addPathPatterns("/numLimit/**");
 
         //需要计算请求时间的请求
         InterceptorRegistration calculateIcpt = registry.addInterceptor(getCalculateReqInterceptor());

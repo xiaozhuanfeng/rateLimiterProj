@@ -39,4 +39,30 @@ public class HelloController {
 
         return "Post:Hello,World";
     }
+
+    @RequestMapping(value="/numLimit/getHello",method = RequestMethod.GET)
+    public String sayHello(){
+        log.info("numLimit Hello ........");
+
+        try {
+            //发呆1s
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            log.error("getHello catch an InterruptedException>>",e);
+        }
+        return "Say:Hello,World";
+    }
+
+    @RequestMapping(value="/numLimit/getHello2",method = RequestMethod.GET)
+    public String sayHello2(){
+        log.info("numLimit Hello2 ........");
+
+        try {
+            //发呆1s
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            log.error("getHello catch an InterruptedException>>",e);
+        }
+        return "Say:Hello,World";
+    }
 }

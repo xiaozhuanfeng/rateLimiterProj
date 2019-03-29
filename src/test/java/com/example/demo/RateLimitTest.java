@@ -56,7 +56,7 @@ public class RateLimitTest {
     public void mulitplyReq() throws Exception {
         //String url = "/rateLimit/getHello";
         String url = "/calculate/getHello";
-        for(int i = 0;i < 1000;i++){
+        for(int i = 0;i < 10;i++){
             sendReq(i,url);
         }
     }
