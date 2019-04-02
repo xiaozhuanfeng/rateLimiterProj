@@ -65,4 +65,16 @@ public class HelloController {
         }
         return "Say:Hello,World";
     }
+
+    @RequestMapping(value="/luaLimit/getHello",method = RequestMethod.GET)
+    public String luaHello(){
+        log.info("luaLimit Hello2 ........");
+        try {
+            //发呆1s
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            log.error("getHello catch an InterruptedException>>",e);
+        }
+        return "Say:Hello,World";
+    }
 }

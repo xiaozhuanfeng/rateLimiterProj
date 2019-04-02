@@ -56,7 +56,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Value("${spring.redis.timeout}")
     private int timeout;
 
-    @Bean
+    @Bean("redisConFactory")
     public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
@@ -73,7 +73,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
+    public StringRedisTemplate stringRedisTemplate(@Qualifier("redisConFactory") RedisConnectionFactory factory) {
         RedisSerializer<String> stringSerializer = new StringRedisSerializer();
 
         StringRedisTemplate template = new StringRedisTemplate(factory);
@@ -85,7 +85,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String, Object> redisTemplate(@Qualifier("redisConFactory") RedisConnectionFactory factory) {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -103,7 +103,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory factory) {
+    public CacheManager cacheManager(@Qualifier("redisConFactory") RedisConnectionFactory factory) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofHours(1)); // 设置缓存有效期一小时
         return RedisCacheManager

@@ -38,7 +38,7 @@ public class RedisTemplateTest {
         System.out.println("userName="+getOpsForValue().get("userName"));//userName=Jack
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(6000);
             System.out.println("userName="+getOpsForValue().get("userName"));//userName=null
         } catch (InterruptedException e) {
             e.printStackTrace();

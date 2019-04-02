@@ -1,6 +1,7 @@
 package com.example.demo.configuration;
 
 import com.example.demo.interceptor.CalculateReqInterceptor;
+import com.example.demo.interceptor.LimitReqLuaInterceptor;
 import com.example.demo.interceptor.LimitReqNumInterceptor;
 import com.example.demo.interceptor.RateLimitInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,11 @@ public class WebInterceptorConfig extends WebMvcConfigurationSupport {
         return new LimitReqNumInterceptor();
     }
 
+    @Bean
+    public LimitReqLuaInterceptor getLimitReqLuaInterceptor() {
+        return new LimitReqLuaInterceptor();
+    }
+
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
@@ -41,5 +47,9 @@ public class WebInterceptorConfig extends WebMvcConfigurationSupport {
         //需要计算请求时间的请求
         InterceptorRegistration calculateIcpt = registry.addInterceptor(getCalculateReqInterceptor());
         calculateIcpt.addPathPatterns("/calculate/**");
+
+        //lua + redis 拦截
+        InterceptorRegistration luaIcpt = registry.addInterceptor(getLimitReqLuaInterceptor());
+        luaIcpt.addPathPatterns("/luaLimit/**");
     }
 }
