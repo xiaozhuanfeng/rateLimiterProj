@@ -1,7 +1,6 @@
 package com.example.demo.utils;
 
 import com.alibaba.fastjson.util.IOUtils;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
