@@ -51,4 +51,8 @@ public class ProjectPathUtils {
         }
         return rootPath;
     }
+
+    public static void main(String[] args) {
+        System.out.println(getRootPath());
+    }
 }
